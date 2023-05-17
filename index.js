@@ -26,9 +26,11 @@ mongoose.connect(MongoURI, {
     .catch(err => console.log(err, '에러에러'))
 
 
+const index = path.resolve(__dirname, './build/index.html');
+
 
 //MIME 타입 설정
-app.use(express.static(path.join(__dirname, 'public'), {
+app.use(express.static(path.join(__dirname, 'build'), {
     setHeaders: (res, path) => {
         if (path.endsWith('.js')) {
             res.setHeader('Content-Type', 'application/javascript');
@@ -41,9 +43,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
 //     //res.sendFile(path.join(__dirname, 'build','index.html'));
 //     //res.send('Welcome hilhi')
 // })
-app.get('*', (req, res) => {                       
-    res.sendFile(path.resolve(__dirname, '../public', 'index.html'));                               
-  });
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
@@ -86,3 +86,7 @@ app.post(
         }
     }
 );
+
+app.get('*', (req, res) => {                       
+    res.sendFile(index);                               
+  });
